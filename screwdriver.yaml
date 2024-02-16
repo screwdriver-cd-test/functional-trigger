@@ -1,14 +1,38 @@
 shared:
-    image: node:10
+    image: node:18
 jobs:
-    success_B:
-        steps:
-            - print: echo "Starting success_B"
-        requires: [~sd@4410:success_A, ~sd@3031:success_A]
-    fail_B:
+    fail_B_prod:
         steps:
             - echo: echo Should not get to this step
-        requires: [~sd@4410:fail_A, ~sd@3031:fail_A]
+        requires: [~sd@3031:fail_A]
+    fail_B_beta:
+        steps:
+            - echo: echo Should not get to this step
+        requires: [~sd@4410:fail_A]
+    success_B_or_prod:
+        steps:
+            - print: echo "Starting success_B_and_prod"
+        requires: [~sd@3031:success_A]
+    success_B_or_beta:
+        steps:
+            - print: echo "Starting success_B_and_bera”
+        requires: [~sd@4410:success_A]
+    success_B_and_prod:
+        steps:
+            - print: echo "Starting success_B_and_prod"
+        requires: [sd@3031:success_A]
+    success_B_and_beta:
+        steps:
+            - print: echo "Starting success_B_and_bera”
+        requires: [sd@4410:success_A]
+    or_join_B_prod:
+        steps:
+            - print: echo "Starting or_join_B_prod"
+        requires: [~sd@3031:success_A, ~sd@3031:fail_A]
+    or_join_B_beta:
+        steps:
+            - print: echo "Starting or_join_B_prod"
+        requires: [~sd@4410:success_A, ~sd@4410:fail_A]
     parallel_B1:
         steps:
             - print: echo "Starting parallel_B1"
