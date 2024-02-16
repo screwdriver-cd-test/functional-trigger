@@ -25,13 +25,13 @@ jobs:
         steps:
             - print: echo "Starting success_B_and_bera”
         requires: [sd@4410:success_A]
-    or_join_B_prod:
+    or_multiple_B_prod:
         steps:
-            - print: echo "Starting or_join_B_prod"
+            - print: echo "Starting or_multiple_B_prod"
         requires: [~sd@3031:success_A, ~sd@3031:fail_A]
-    or_join_B_beta:
+    or_multiple_B_beta:
         steps:
-            - print: echo "Starting or_join_B_prod"
+            - print: echo "Starting or_multiple_B_prod"
         requires: [~sd@4410:success_A, ~sd@4410:fail_A]
     parallel_B1:
         steps:
