@@ -15,7 +15,7 @@ jobs:
         requires: [~sd@3031:success_A]
     success_B_or_beta:
         steps:
-            - print: echo "Starting success_B_and_bera”
+            - print: echo "Starting success_B_and_beta”
         requires: [~sd@4410:success_A]
     success_B_and_prod:
         steps:
@@ -23,7 +23,7 @@ jobs:
         requires: [sd@3031:success_A]
     success_B_and_beta:
         steps:
-            - print: echo "Starting success_B_and_bera”
+            - print: echo "Starting success_B_and_beta”
         requires: [sd@4410:success_A]
     or_multiple_B_prod:
         steps:
