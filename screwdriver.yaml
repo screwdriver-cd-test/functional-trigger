@@ -3,11 +3,11 @@ shared:
 jobs:
     fail_B_prod:
         steps:
-            - echo: echo Should not get to this step
+            - echo: echo "Should not get to this step"
         requires: [~sd@3031:fail_A]
     fail_B_beta:
         steps:
-            - echo: echo Should not get to this step
+            - echo: echo "Should not get to this step"
         requires: [~sd@4410:fail_A]
     success_B_or_prod:
         steps:
@@ -15,7 +15,7 @@ jobs:
         requires: [~sd@3031:success_A]
     success_B_or_beta:
         steps:
-            - print: echo "Starting success_B_and_beta”
+            - print: echo "Starting success_B_and_beta"
         requires: [~sd@4410:success_A]
     success_B_and_prod:
         steps:
@@ -23,7 +23,7 @@ jobs:
         requires: [sd@3031:success_A]
     success_B_and_beta:
         steps:
-            - print: echo "Starting success_B_and_beta”
+            - print: echo "Starting success_B_and_beta"
         requires: [sd@4410:success_A]
     or_multiple_B_prod:
         steps:
