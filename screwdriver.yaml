@@ -1,19 +1,27 @@
 shared:
-    image: node:8
+    image: node:20
 jobs:
     main:
         steps:
             - echo: echo test
         requires: [ ~sd@5399:trigger, ~sd@7101:trigger ]
+        annotations:
+            screwdriver.cd/virtualJob: true
     parallel1:
         steps:
             - echo: echo test
         requires: [ main ]
+        annotations:
+            screwdriver.cd/virtualJob: true
     parallel2:
         steps:
             - echo: echo test
         requires: [ main ]
+        annotations:
+            screwdriver.cd/virtualJob: true
     join:
         steps:
             - echo: echo test
         requires: [parallel1, parallel2]
+        annotations:
+            screwdriver.cd/virtualJob: true
