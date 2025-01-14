@@ -1,15 +1,17 @@
 shared:
-    image: node:8
+    image: node:20
+    steps:
+        - echo: echo test
 jobs:
     success_A:
-        steps:
-            - print: echo "Starting success_A job"
         requires: [~commit]
+        annotations:
+            screwdriver.cd/virtualJob: true
     fail_A:
         steps:
             - fail: exit 1
         requires: []
     parallel_A:
-        steps:
-            - print: echo "Starting parallel_A job"
         requires: []
+        annotations:
+            screwdriver.cd/virtualJob: true
