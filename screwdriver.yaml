@@ -1,43 +1,41 @@
 shared:
     image: node:18
+    steps:
+        - echo: echo test
 jobs:
     fail_B_prod:
-        steps:
-            - echo: echo "Should not get to this step"
         requires: [~sd@3031:fail_A]
+        annotations:
+            screwdriver.cd/virtualJob: true
     fail_B_beta:
-        steps:
-            - echo: echo "Should not get to this step"
         requires: [~sd@4410:fail_A]
+        annotations:
+            screwdriver.cd/virtualJob: true
     success_B_or_prod:
-        steps:
-            - print: echo "Starting success_B_and_prod"
         requires: [~sd@3031:success_A]
+        annotations:
+            screwdriver.cd/virtualJob: true
     success_B_or_beta:
-        steps:
-            - print: echo "Starting success_B_and_beta"
         requires: [~sd@4410:success_A]
+        annotations:
+            screwdriver.cd/virtualJob: true
     success_B_and_prod:
-        steps:
-            - print: echo "Starting success_B_and_prod"
         requires: [sd@3031:success_A]
     success_B_and_beta:
-        steps:
-            - print: echo "Starting success_B_and_beta"
         requires: [sd@4410:success_A]
     or_multiple_B_prod:
-        steps:
-            - print: echo "Starting or_multiple_B_prod"
         requires: [~sd@3031:success_A, ~sd@3031:fail_A]
+        annotations:
+            screwdriver.cd/virtualJob: true
     or_multiple_B_beta:
-        steps:
-            - print: echo "Starting or_multiple_B_prod"
         requires: [~sd@4410:success_A, ~sd@4410:fail_A]
+        annotations:
+            screwdriver.cd/virtualJob: true
     parallel_B1:
-        steps:
-            - print: echo "Starting parallel_B1"
         requires: [~sd@4410:parallel_A, ~sd@3031:parallel_A]
+        annotations:
+            screwdriver.cd/virtualJob: true
     parallel_B2:
-        steps:
-            - print: echo "Starting parallel_B2"
         requires: [~sd@4410:parallel_A, ~sd@3031:parallel_A]
+        annotations:
+            screwdriver.cd/virtualJob: true
