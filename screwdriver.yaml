@@ -2,14 +2,12 @@ shared:
    image: node:20
    steps:
       - echo: echo test
+   annotations:
+      screwdriver.cd/virtualJob: true
 jobs:
     simple:
         requires: [~commit]
-        annotations:
-            screwdriver.cd/virtualJob: true
     parallel:
         requires: [simple]
-        annotations:
-            screwdriver.cd/virtualJob: true
     join:
         requires: [parallel, sd@5398:external]
