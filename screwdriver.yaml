@@ -1,34 +1,23 @@
 shared:
     image: node:20
 jobs:
-    main_1:
+    main:
         steps:
-            - metatest1: test "external_parameter" = `meta get parameters.externalParam.value --external sd@5399:trigger --skip-fetch`
-            - metatest2: test "external_meta" = `meta get "externalMeta" --external sd@5399:trigger --skip-fetch`
-        requires: [ ~sd@5399:trigger ]
-    main_2:
-        steps:
-            - metatest1: test "external_parameter" = `meta get parameters.externalParam.value --external sd@7101:trigger --skip-fetch`
-            - metatest2: test "external_meta" = `meta get "externalMeta" --external sd@7101:trigger --skip-fetch`
-        requires: [ ~sd@7101:trigger ]
-
-    hub:
-        steps:
-            - echo: echo test
-        requires: [ ~main_1, ~main_2 ]
-        annotations:
-            screwdriver.cd/virtualJob: true
-    
+            - get-upstream-job: |
+                EXTERNAL_JOB=$(curl -s -H 'accept: application/json' -H "Authorization:Bearer $SD_TOKEN" $SD_API_URL/events/$SD_EVENT_ID | jq -r '.startFrom | ltrimstr("~")')
+            - metatest1: test "external_parameter" = `meta get parameters.externalParam.value --external $EXTERNAL_JOB --skip-fetch`
+            - metatest2: test "external_meta" = `meta get "externalMeta" --external $EXTERNAL_JOB --skip-fetch`
+        requires: [ ~sd@5399:trigger, ~sd@7101:trigger ]    
     parallel1:
         steps:
             - echo: echo test
-        requires: [ hub ]
+        requires: [ main ]
         annotations:
             screwdriver.cd/virtualJob: true
     parallel2:
         steps:
             - echo: echo test
-        requires: [ hub ]
+        requires: [ main ]
         annotations:
             screwdriver.cd/virtualJob: true
     join:
