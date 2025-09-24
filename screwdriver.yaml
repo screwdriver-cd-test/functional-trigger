@@ -2,8 +2,8 @@ shared:
     image: node:20
 jobs:
     trigger:
+        parameters:
+            externalParam: "external_parameter" # Check if external trigger parameter can be referenced in downstream build
         steps:
-            - echo: echo test
+            - metaset: meta set externalMeta "external_meta" # Check if external trigger metadata can be referenced in downstream build
         requires: [ ~commit ]
-        annotations:
-            screwdriver.cd/virtualJob: true
